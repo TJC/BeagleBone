@@ -1,0 +1,26 @@
+
+There are several JVMs available:
+ * Zero - interpreter only, possibly JIT in recent releases.
+ * JamVM - seems to be the best bet for Arm. Fastest, small memory footprint.
+ * Cacao - is a full-featured JIT JVM
+
+You can install all of them at once in Ubuntu, and then select between them
+like so:
+ java -jamvm -version
+ java -zero -version
+ java -cacao -version
+
+The default is specified in /usr/lib/jvm/.../lib/arm/jvm.cfg
+
+There is a bug with JamVM, such that it won't work until you cd into the
+above arm/lib/ directory and do:
+ ln -s jamvm/libjvm.so .
+
+
+
+
+There was some info here, but it was for Angstrom and I ignored it:
+http://beaglebone.cameon.net/home/doing-java-development
+opkg update
+opkg install openjdk6-jdk
+
