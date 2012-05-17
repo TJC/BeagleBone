@@ -1,0 +1,9 @@
+To check what pins are currently muxed to, check:
+/sys/kernel/debug/omap_mux/ stuff
+
+You can adjust them with, for instance:
+echo '7' > /sys/kernel/debug/omap_mux/gpmc_ad6
+which sets pin P8_3 to mode 7. See
+http://www.gigamegablog.com/2012/01/05/beaglebone-coding-101-blinking-an-led/
+for more details about working out what the mux ID is for a given point on the
+connector..

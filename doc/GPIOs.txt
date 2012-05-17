@@ -1,0 +1,12 @@
+See http://beaglebone.cameon.net/home/using-the-gpios
+
+echo $pin_id > /sys/class/gpio/export
+cd /sys/class/gpio/gpio$pin_id
+echo 'out' > direction
+echo 1 > value   # sets high
+echo 0 > value   # sets low
+
+
+echo 'in' > direction   # i think?
+cat value               # reads value
+

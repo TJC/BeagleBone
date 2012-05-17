@@ -1,0 +1,17 @@
+# A sample /etc/network/interfaces file for a WPA2 encrypted access point is:
+# TJC notes -- but on Ubuntu, you might need to look at wpa_supplicant.conf
+# instead.
+
+auto lo
+iface lo inet loopback
+
+auto wlan0
+iface wlan0 inet dhcp
+    wpa-driver wext
+    wpa-ssid <NAME OF AP>
+    wpa-ap-scan 1
+    wpa-proto RSN
+    wpa-pairwise CCMP
+    wpa-group CCMP
+    wpa-key-mgmt WPA-PSK
+    wpa-psk < INSERT KEY XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>

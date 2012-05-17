@@ -1,0 +1,113 @@
+SSD1306 controller for 128x32 OLED.
+Datasheet: http://www.adafruit.com/datasheets/SSD1306.pdf
+
+It's hard-wired to be in 4-wire SPI mode.
+
+The 4-wire serial interface consists of
+ * serial clock: SCLK
+ * serial data: SDIN
+ * D/C#
+ * CS#
+
+SDIN is shifted into an 8-bit shift register on every rising edge of SCLK in
+the order of D7, D6, ... D0.
+D/C# is sampled on every eighth clock and the data byte in the shift register
+is written to the Graphic Display Data RAM (GDDRAM) or command register in the
+same clock.  
+
+So, you get:
+
+# byte = byte to write to chip
+# mode = screen data or command
+sub writeByte($byte, $mode) {
+  my @bits = split('', unpack('B8', $byte));
+  setPin(CS, LOW);
+  setPin(DC, $mode eq 'cmd' ? LOW : HIGH );
+ 
+  # It seems that it's valid to blat out many bytes in a row
+  # in a loop like this, not just one.
+  map {
+    setPin(CLK, LOW);
+    setPin(DATA, $_);
+    setPin(CLK, HIGH);
+    usleep(1); # XXX not sure how much, if any at all
+  } @bits;
+
+  setPin(CS, HIGH);
+  # Done!
+}
+
+
+RESET
+When RST is pulled LOW, the chip is initialised like so:
+1. Display is OFF 
+2. 128 x 64 Display Mode  (or 128x32 in our case??)
+3. Normal segment and display data column address and row address mapping (SEG0
+mapped to address 00h and COM0 mapped to address 00h) 
+4. Shift register data clear in serial interface 
+5. Display start line is set at display RAM address 0 
+6. Column address counter is set at 0 
+7. Normal scan direction of the COM outputs 
+8. Contrast control register is set at 7Fh 
+9. Normal display mode (Equivalent to A4h command) 
+
+
+Power ON sequence:
+1. Power on Vpp
+2. After it's stable, set RST to LOW for at least 3us, then HIGH.
+3. Then power on Vcc.
+4. After it's stable, send command AFh for display-on.
+
+
+However, the Arduino library does all this!
+rst -> HIGH
+delay(1ms)
+rst -> LOW
+delay(10ms)
+rst -> HIGH
+command: displayoff (0xAE)
+command: setdisplayclockdiv (0xD5)
+command: 0x80 (display ratio?)
+command: setmultiplex (0xA8)
+command: 0x1F
+command: setdisplayoffset (0xD3)
+command: 0x00 (no offset)
+command: setstartline (line zero)
+command: chargepump (0x8D)
+if (external vcc) {
+  command: 0x10
+} else {
+  command: 0x14
+}
+command: memorymode (0x20) (XXX isn't this address mode??)
+command: 0x00 // something ks0108?
+command: segremap with arg 0x1
+command: comscandec
+command: setcompins (0xda)
+command: 0x02
+command: setcontrast
+command: 0x8F
+command: setprecharge
+if (external vcc) {
+  command: 0x22
+} else {
+  command: 0xF1
+}
+command: setvcomdetect (0xDB)
+command: 0x40
+command: displayallon_resume (0xA4)
+command: normaldisplay (0xA6)
+
+
+Addressing mode:
+I think the Set Memory Addressing Mode (20h) should be set to
+horizontal addressing mode (A[1:0]=00b).
+This means you can just write sequential gfx data to the controller, and it'll
+auto-increment the location all the way along the display, and then flip back
+to the start. Nice and simple!
+To do so, write a command byte: (D7->D0) 0 0 1 0 0 0 0 0
+That's a value of 0x20, so:
+writeByte(0x20, 'cmd');
+
+
+See datasheet, above, and search for section 9, the command list.

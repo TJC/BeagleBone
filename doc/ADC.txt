@@ -1,0 +1,7 @@
+See http://beaglebone.cameon.net/home/reading-the-analog-inputs-adc
+
+1.8V range, do not exceed!
+12 bit resolution (0-4095)
+
+cat /sys/devices/platform/tsc/ain1
+(devices ain1->ain8 should exist)

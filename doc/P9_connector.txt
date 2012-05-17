@@ -1,0 +1,29 @@
+P9 is the connector on the same side as the 5V power plug.
+Starting from the top (near 5V plug)..
+
+First listed is the pin mux name, then GPIO id.
+(See pin_muxing.txt and GPIO.txt)
+
+1   GND                     2   GND
+3   DC 3.3V                 4   DC 3.3V
+5   VDD 5V (from ext pwr)   6   VDD 5V
+7   SYS 5V (from usb pwr)   8   SYS 5V
+9   PWR BUT                 10  RESET OUT
+11  gpmc_wait0 / gpio0[30]  12  gpmc_be1n / gpio1[28]
+13  gpmc_wpn   / gpio0[31]  14  gpmc_a2   / gpio1[18]
+15  gpmc_a0    / gpio1[16]  16  gpmc_a3   / gpio1[19]
+17  spi0_cs0   / gpio0[5]   18  spi0_d1   / gpio0[4]
+19  uart1_rtsn / gpio0[13]  20  spi0_d0   / gpio0[12]
+21  spi0_d0    / gpio0[3]   22  spi0_sclk / gpio0[2]
+etc..
+
+
+
+Note that VDD 5V only gets power when you have the external power connected..
+Not when USB only.
+The others work all the time, I think.
+
+Power ratings per pin:
+VDD 3.3 EXP - 250 mA
+VDD 5V - 1000 mA
+SYS 5V - 250 mA
