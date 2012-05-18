@@ -80,4 +80,10 @@ P9_21:
 P9_22:
     mux: spi0_sclk
     gpio: 2
+P9_23:
+    mux: gpmc_a1
+    gpio: 17
+P9_24:
+    mux: uart1_txd
+    gpio: 15
 
