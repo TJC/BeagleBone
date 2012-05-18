@@ -49,19 +49,19 @@ P9_11:
     gpio: 30
 P9_12:
     mux: gpmc_ben1
-    gpio: 28
+    gpio: 40
 P9_13:
     mux: gpmc_wpn
     gpio: 31
 P9_14:
     mux: gpmc_a2
-    gpio: 18
+    gpio: 50
 P9_15:
     mux: gpmc_a0
-    gpio: 16
+    gpio: 48
 P9_16:
     mux: gpmc_a3
-    gpio: 19
+    gpio: 51
 P9_17:
     mux: spi0_cs0
     gpio: 5
@@ -82,7 +82,7 @@ P9_22:
     gpio: 2
 P9_23:
     mux: gpmc_a1
-    gpio: 17
+    gpio: 49
 P9_24:
     mux: uart1_txd
     gpio: 15
