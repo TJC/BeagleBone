@@ -64,7 +64,9 @@ sub digitalRead {
     my ($self) = @_;
     $self->gpio_open('in') unless (defined $self->gpio_fh);
     my $buf;
+    sysseek($self->gpio_fh, 0, 0);
     sysread($self->gpio_fh, $buf, 1);
+    return $buf;
 }
 
 sub DESTROY {
