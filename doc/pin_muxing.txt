@@ -7,3 +7,27 @@ which sets pin P8_3 to mode 7. See
 http://www.gigamegablog.com/2012/01/05/beaglebone-coding-101-blinking-an-led/
 for more details about working out what the mux ID is for a given point on the
 connector..
+
+
+Note that if you echo '7', you set the pin to GPIO output.
+To use it for input (with a pull-up resistor enabled), echo '37'.
+To use it for input (with a pull-up disabled), echo '27'.
+
+This was taken from the Beaglebone google group:
+
+> Also, I believe input pullup is actually 0x37 (AM33XX_INPUT_EN |
+> AM3XX_PULL_UP) and pulldown is 0x27 (if the above is true). I tested
+> this and it appears to be the case.
+
+Take a look at the manual referenced above...
+
+bit 5:        input enable
+bit 4:        pull up type selection
+bit 3:        pull up/down enable
+bits 0-2:   mode selection
+
+By the way, I think there is a mistake in table 9-1 bit 3. The pull up/
+down enable is reversed. According to the follow up details in section
+9.2.2 and specifically table 9.3, bit 3 value of 0 is disable and 1 is
+enable. I plan on sending a note to TI on that and get clarification...
+
