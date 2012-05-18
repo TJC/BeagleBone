@@ -20,6 +20,8 @@ sub new {
     );
 }
 
+# TODO: Just import the JSON from here:
+# https://github.com/jadonk/bonescript/blob/master/bonescript/bone.js
 
 1;
 __DATA__
