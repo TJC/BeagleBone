@@ -27,12 +27,16 @@ has 'gpio_fh' => (
 sub set_mode {
     my ($self, $mode) = @_;
     sysopen(my $fh, "/sys/kernel/debug/omap_mux/" . $self->mux, O_WRONLY);
-    syswrite($fh, "$mode", 1);
+    syswrite($fh, $mode, length($mode));
     close($fh);
 }
 
 sub gpio_open {
     my ($self, $direction) = @_;
+
+    my $mode = $direction eq 'out' ? 7 : 37;
+    $self->set_mode($mode); # All GPIO is mode 7, add 20 or 30 for input,
+    # without/with a pull-up resistor.
 
     if (not -d "/sys/class/gpio/gpio" . $self->gpio) {
         sysopen(my $tmp, "/sys/class/gpio/export", O_WRONLY);
