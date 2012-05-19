@@ -3,6 +3,7 @@ use 5.14.1;
 use warnings;
 use BeagleBone::Pins;
 use Time::HiRes qw(usleep);
+use Carp qw(croak);
 
 # This is meant to be a driver for the SSD1306 LCD controller.
 # See http://www.adafruit.com/datasheets/SSD1306.pdf
@@ -27,53 +28,66 @@ sub init_display {
 
     # Using very paranoid delays here!
     $rst->digitalWrite(1);
-    usleep(10000);
+    usleep(1000);
     $rst->digitalWrite(0);
     usleep(10000);
     $rst->digitalWrite(1);
     usleep(10000);
 
 
-    # this part totally cloned from:
+    # this part originally cloned from:
     # https://github.com/adafruit/Adafruit_SSD1306
-    writeByte(0xAE, 'cmd');
-    writeByte(0xD5, 'cmd');
-    writeByte(0x80, 'cmd');
-    writeByte(0xA8, 'cmd');
-    writeByte(0x1F, 'cmd');
-    writeByte(0xD3, 'cmd');
-    writeByte(0x00, 'cmd');
-    writeByte(0x8D, 'cmd'); # enable chargepump regulator
-    writeByte(0x14, 'cmd'); # turn on. (off= 0x10 if external power?)
+    # But then modified somewhat.
 
-    writeByte(0xDA, 'cmd');
-    writeByte(0x02, 'cmd');
-    writeByte(0x81, 'cmd');
-    writeByte(0x8F, 'cmd');
+    $self->writeByte(0xAE, 'cmd');
+    $self->writeByte(0xD5, 'cmd');
+    $self->writeByte(0x80, 'cmd');
+    $self->writeByte(0xA8, 'cmd');
+    $self->writeByte(0x1F, 'cmd');
+    $self->writeByte(0xD3, 'cmd');
+    $self->writeByte(0x00, 'cmd');
+    $self->writeByte(0x8D, 'cmd'); # enable chargepump regulator
+    $self->writeByte(0x14, 'cmd'); # turn on. (off= 0x10 if external power?)
 
-    writeByte(0xD9, 'cmd');
-    writeByte(0xF1, 'cmd'); # 0x22 if ext power?
+    $self->writeByte(0xDA, 'cmd');
+    $self->writeByte(0x02, 'cmd');
+    $self->writeByte(0x81, 'cmd');
+    $self->writeByte(0x8F, 'cmd');
 
-    writeByte(0xDB, 'cmd');
-    writeByte(0x40, 'cmd');
+    $self->writeByte(0xD9, 'cmd');
+    $self->writeByte(0xF1, 'cmd'); # 0x22 if ext power?
+
+    $self->writeByte(0xDB, 'cmd');
+    $self->writeByte(0x40, 'cmd');
 
     # Setup memory addressing mode, to horizontal
-    writeByte(0x20, 'cmd');
+    $self->writeByte(0x20, 'cmd');
+    $self->writeByte(0x00, 'cmd');
 
-    writeByte(0xA4, 'cmd');
-    writeByte(0xA6, 'cmd');
+    # Set page range to be 0-3 (for 32px - change to 0-7 if on a 64px panel)
+    $self->writeByte(0x22, 'cmd');
+    $self->writeByte(0x0, 'cmd');
+    $self->writeByte(0x3, 'cmd');
 
-    writeByte(0xAF, 'cmd'); # Display on
+    $self->writeByte(0xA4, 'cmd');
+
+    $self->writeByte(0xAF, 'cmd'); # Display on
+
+    # Clear the screen:
+    my @buf = map { 0 } (0..511);
+    $self->writeBulk(\@buf);
+
+    return;
 }
 
 # byte = byte to write to chip
 # mode = screen data or command
 # TODO: Convert to using SPI via kernel.. much more efficient.
 sub writeByte {
-    my ($byte, $mode) = @_;
+    my ($self, $byte, $mode) = @_;
     $mode //= 'data';
 
-    # Wow, this is crazily inefficient :(
+    # This can't be efficient :(
     my @bits = split('', unpack('B8', pack('C', $byte)));
 
     $cs->digitalWrite(1);
@@ -93,9 +107,40 @@ sub writeByte {
     # Done!
 }
 
-sub pixels {
+# Method to write an entire buffer of data to the controller
+# Assumes it's all data, no commands.
+# $bytes should be an array-reference
+sub writeBulk {
+    my ($self, $bytes) = @_;
+    croak "\$bytes param should be array-ref"
+        unless (ref $bytes eq 'ARRAY');
+
+    $cs->digitalWrite(1);
+    $clk->digitalWrite(0);
+    $dc->digitalWrite(1); # data, not command
+    $cs->digitalWrite(0);
+
+    # This code does not make me happy..
+    my @bits = map { split('', unpack('B8', pack('C', $_))) } @$bytes;
+
+    map {
+        $data->digitalWrite($_);
+        $clk->digitalWrite(1);
+        # If this code ever goes fast enough, we'll need a usleep here.
+        $clk->digitalWrite(0);
+    } @bits;
+
+    $cs->digitalWrite(1);
+}
+
+sub display_normal {
     my $self = shift;
-    writeByte(shift, 'data');
+    $self->writeByte(0xA6, 'cmd');
+}
+
+sub display_inverse {
+    my $self = shift;
+    $self->writeByte(0xA7, 'cmd');
 }
 
 1;

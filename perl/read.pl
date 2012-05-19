@@ -4,9 +4,11 @@ use warnings;
 use BeagleBone::Pins;
 use Time::HiRes qw(usleep);
 
-say "This simply reads the value from P9_21 and graphs it.";
+my $id = 'P9_22';
 
-my $pin = BeagleBone::Pins->new('P9_21');
+say "This simply reads the value from $id and graphs it.";
+
+my $pin = BeagleBone::Pins->new('P9_22');
 say "Mux: " . $pin->mux;
 say "GPIO: " . $pin->gpio;
 sleep 1;
@@ -21,5 +23,5 @@ while (1) {
             say "****************";
         }
     }
-    usleep(100);
+    usleep(10000);
 }
