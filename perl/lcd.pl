@@ -26,10 +26,10 @@ my @zed = qw(0 66 98 82 74 70 66 0);
 my $lcd = BeagleBone::SSD1306->new;
 while (1) {
     if (rand() > 0.5) {
-        $lcd->pixels($_, 'data') for @ay;
+        $lcd->writeByte($_, 'data') for @ay;
     }
     else {
-        $lcd->pixels($_, 'data') for @zed;
+        $lcd->writeByte($_, 'data') for @zed;
     }
 }
 
