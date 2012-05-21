@@ -1,0 +1,25 @@
+SPI pins:
+
+First bus:
+
+Pin     mux name        mux mode    SPI name
+P9_17   spi0_cs0        0           spi0_cs0
+P9_18   spi0_d1         0           spi0_d1
+P9_21   spi0_d0         0           spi0_d0
+P9_22   spi0_sclk       0           spi0_sclk
+
+
+Second bus:
+/dev/spidev2.0
+
+Pin     mux name        mux mode    SPI name
+P9_19   uart_rtsn       4           spi1_cs1
+P9_20   spi0_d0         4           spi1_cs0
+P9_28   mcasp0_ahclkr   3           spi1_cs0
+P9_29   mcasp0_fsx      3           spi1_d0
+P9_30   mcasp0_axr0     3           spi1_d1
+P9_31   mcasp0_aclkx    3           spi1_sclk
+P9_42   ecap0_in_pwm0   2           spi1_cs1
+
+
+
