@@ -2,6 +2,7 @@ package BeagleBone::SSD1306;
 use 5.14.1;
 use warnings;
 use BeagleBone::Pins;
+use BeagleBone::SPI;
 use Time::HiRes qw(usleep);
 use Carp qw(croak);
 
@@ -9,11 +10,11 @@ use Carp qw(croak);
 # See http://www.adafruit.com/datasheets/SSD1306.pdf
 
 # TODO: Allow these to be defined via parameters:
-my $data = BeagleBone::Pins->new('P9_11');
-my $clk = BeagleBone::Pins->new('P9_13');
+#my $data = BeagleBone::Pins->new('P9_11');
+#my $clk = BeagleBone::Pins->new('P9_13');
 my $dc = BeagleBone::Pins->new('P9_15');
 my $rst = BeagleBone::Pins->new('P9_17');
-my $cs = BeagleBone::Pins->new('P9_19');
+#my $cs = BeagleBone::Pins->new('P9_19');
 
 sub new {
     my ($class, %args) = @_;
@@ -90,20 +91,10 @@ sub writeByte {
     # This can't be efficient :(
     my @bits = split('', unpack('B8', pack('C', $byte)));
 
-    $cs->digitalWrite(1);
-    $clk->digitalWrite(0);
     $dc->digitalWrite($mode eq 'cmd' ? 0 : 1 ); 
-    $cs->digitalWrite(0);
 
-    # usleep(1);
+    BeagleBone::SPI->SpiWrite([$byte]);
 
-    map {
-        $data->digitalWrite($_);
-        $clk->digitalWrite(1);
-        $clk->digitalWrite(0);
-    } @bits;
-
-    $cs->digitalWrite(1);
     # Done!
 }
 
@@ -115,22 +106,8 @@ sub writeBulk {
     croak "\$bytes param should be array-ref"
         unless (ref $bytes eq 'ARRAY');
 
-    $cs->digitalWrite(1);
-    $clk->digitalWrite(0);
     $dc->digitalWrite(1); # data, not command
-    $cs->digitalWrite(0);
-
-    # This code does not make me happy..
-    my @bits = map { split('', unpack('B8', pack('C', $_))) } @$bytes;
-
-    map {
-        $data->digitalWrite($_);
-        $clk->digitalWrite(1);
-        # If this code ever goes fast enough, we'll need a usleep here.
-        $clk->digitalWrite(0);
-    } @bits;
-
-    $cs->digitalWrite(1);
+    BeagleBone::SPI->SpiWrite($bytes);
 }
 
 sub display_normal {
