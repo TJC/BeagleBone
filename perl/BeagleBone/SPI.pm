@@ -57,8 +57,8 @@ int c_spi_write(unsigned char* bytes, unsigned int length) {
     }
 
     uint8_t bits = 8;
-    uint16_t delay = 5;
-    uint32_t speed = 1000000;
+    uint16_t delay = 1;
+    uint32_t speed = 10000000;
     // uint8_t tx[4096];
 
     struct spi_ioc_transfer tr = {
