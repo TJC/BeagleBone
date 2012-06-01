@@ -1,0 +1,19 @@
+P8 is the connector on the opposite side to the 5V power plug.
+(ie. Near the four user LEDs)
+Starting from the top...
+
+First listed is the pin mux name, then GPIO id.
+(See pin_muxing.txt and GPIO.txt)
+
+1   GND                     2   GND
+3   gpmc_ad6   / gpio38     4   gpio1_7
+5   gpmc_ad2   / gpio34     6   gpio1_3
+...
+21  gpmc_csn1  / gpio62     22  gpmc_ad5  / gpio37
+23  gpmc_ad4   / gpio36     24  gpmc_ad1  / gpio33
+25  gpmc_ad0   / gpio32     26  gpmc_csn0 / gpio61
+27  lcd_vsync  / gpio86     28  lcd_pclk  / gpio88
+29  lcd_hsync  / gpio87     30  lcd_ac_bias_en / gpio89
+etc..
+
+

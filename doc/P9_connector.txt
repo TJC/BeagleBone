@@ -17,6 +17,13 @@ First listed is the pin mux name, then GPIO id.
 21  spi0_d0    / gpio0[3]   22  spi0_sclk / gpio0[2]
 23  gpmc_a1    / gpio1[17]  24  uart1_txd / gpio0[15]
 etc..
+27  gpio3_19                28  spi1_cs0
+29  spi1_d0 (rx)            30  spi1_d1 (tx)
+31  spi1_sclk               32  vdd_adc (1.8V)
+33  ain4                    34  gnd_adc
+35  ain6                    36  ain5
+37  ain2                    38  ain3
+39  ain0                    40  ain1
 
 
 
