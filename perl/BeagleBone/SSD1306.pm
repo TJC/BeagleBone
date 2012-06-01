@@ -48,8 +48,8 @@ sub new {
     my ($class, %args) = @_;
     my $self = {};
     bless $self, $class;
-    $self->dc_pin( BeagleBone::Pins->new($args{dc_pin} || 'P9_15') );
-    $self->rst_pin( BeagleBone::Pins->new($args{rst_pin} || 'P9_17') );
+    $self->dc_pin( BeagleBone::Pins->new($args{dc_pin} || 'P8_05') );
+    $self->rst_pin( BeagleBone::Pins->new($args{rst_pin} || 'P8_03') );
     $self->init_display;
     return $self;
 }
