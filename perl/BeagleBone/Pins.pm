@@ -26,6 +26,27 @@ sub new {
 1;
 __DATA__
 ---
+P8_03:
+    mux: gpmc_ad6
+    gpio: 38
+P8_05:
+    mux: gpmc_ad2
+    gpio: 34
+P8_21:
+    mux: gpmc_csn1
+    gpio: 62
+P8_23:
+    mux: gpmc_ad4
+    gpio: 36
+P8_25:
+    mux: gpmc_ad0
+    gpio: 32
+P8_27:
+    mux: lcd_vsync
+    gpio: 86
+P8_29:
+    mux: lcd_hsync
+    gpio: 87
 P9_1:
     desc: GND
 P9_2:
@@ -88,4 +109,3 @@ P9_23:
 P9_24:
     mux: uart1_txd
     gpio: 15
-
