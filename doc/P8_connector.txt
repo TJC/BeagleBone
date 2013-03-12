@@ -16,4 +16,11 @@ First listed is the pin mux name, then GPIO id.
 29  lcd_hsync  / gpio87     30  lcd_ac_bias_en / gpio89
 etc..
 
-
+32  lcd_data15 / gpio11
+34  lcd_data11 / gpio81
+36  lcd_data10 / gpio80 (?)
+38  lcd_data9 / gpio79
+40  lcd_data7 / gpio77
+42  lcd_data2 / gpio75
+44  lcd_data3 / gpio73
+46  lcd_data1 / gpio71
