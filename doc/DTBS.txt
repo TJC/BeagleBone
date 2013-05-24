@@ -1,0 +1,100 @@
+SPI pins, need mode 0 i think:
+0x19C   SPI1_CS0
+0x194   SPI1_D0
+0x198   SPI1_D1
+0x190   SPI1_SCLK
+
+
+P8_1        GND
+P8_2        GND
+P8_3    0×18    GPIO1_6 gpmc_ad6
+P8_4    0x1C    GPIO1_7 gpmc_ad7
+P8_5    0×08    GPIO1_2 gpmc_ad2
+P8_6    0x0C    GPIO1_3 gpmc_ad3
+P8_7    0×90    TIMER4  gpmc_advn_ale
+P8_8    0×94    TIMER7  gpmc_oen_ren
+P8_9    0x9C    TIMER5  gpmc_be0n_cle
+P8_10   0×98    TIMER6  gpmc_wen
+P8_11   0×34    GPIO1_13    gpmc_ad13
+P8_12   0×30    GPIO1_12    GPMC_AD12
+P8_13   0×24    EHRPWM2B    gpmc_ad9
+P8_14   0×28    GPIO0_26    gpmc_ad10
+P8_15   0x3C    GPIO1_15    gpmc_ad15
+P8_16   0×38    GPIO1_14    gpmc_ad14
+P8_17   0x2C    GPIO0_27    gpmc_ad11
+P8_18   0x8C    GPIO2_1 gpmc_clk_mux0
+P8_19   0×20    EHRPWM2A    gpmc_ad8
+P8_20   0×84    GPIO1_31    gpmc_csn2
+P8_21   0×80    GPIO1_30    gpmc_csn1
+P8_22   0×14    GPIO1_5 gpmc_ad5
+P8_23   0×10    GPIO1_4 gpmc_ad4
+P8_24   0×04    GPIO1_1 gpmc_ad1
+P8_25   0×00    GPIO1_0 gpmc_ad0
+P8_26   0x7C    GPIO1_29    gpmc_csn0
+P8_27   0xE0    GPIO2_22    lcd_vsync
+P8_28   0xE8    GPIO2_24    lcd_pclk
+P8_29   0xE4    GPIO2_23    lcd_hsync
+P8_30   0xEC    GPIO2_25    lcd_ac_bias_en
+P8_31   0xD8    UART5_CTSN  lcd_data14
+P8_32   0xDC    UART5_RTSN  lcd_data15
+P8_33   0xD4    UART4_RTSN  lcd_data13
+P8_34   0xCC    UART3_RTSN  lcd_data11
+P8_35   0xD0    UART4_CTSN  lcd_data12
+P8_36   0xC8    UART3_CTSN  lcd_data10
+P8_37   0xC0    UART5_TXD   lcd_data8
+P8_38   0xC4    UART5_RXD   lcd_data9
+P8_39   0xB8    GPIO2_12    lcd_data6
+P8_40   0xBC    GPIO2_13    lcd_data7
+P8_41   0xB0    GPIO2_10    lcd_data4
+P8_42   0xB4    GPIO2_11    lcd_data5
+P8_43   0xA8    GPIO2_8 lcd_data2
+P8_44   0xAC    GPIO2_9 lcd_data3
+P8_45   0xA0    GPIO2_6 lcd_data0
+P8_46   0xA4    GPIO2_7 lcd_data1
+
+P9_1        GND 
+P9_2        GND 
+P9_3        DC_3.3V 
+P9_4        DC_3.3V 
+P9_5        VDD_5V  
+P9_6        VDD_5V  
+P9_7        SYS_5V  
+P9_8        SYS_5V  
+P9_9        PWR_BUT 
+P9_10       SYS_RESETn  RESET_OUT
+P9_11   0×70    UART4_RXD   gpmc_wait0
+P9_12   0×78    GPIO1_28    gpmc_be1n
+P9_13   0×74    UART4_TXD   gpmc_wpn
+P9_14   0×48    EHRPWM1A    gpmc_a2
+P9_15   0×40    GPIO1_16    gpmc_a0
+P9_16   0x4C    EHRPWM1B    gpmc_a3
+P9_17   0x15C   I2C1_SCL    spi0_cs0
+P9_18   0×158   I2C1_SDA    spi0_d1
+P9_19   0x17C   I2C2_SCL    uart1_rtsn
+P9_20   0×178   I2C2_SDA    uart1_ctsn
+P9_21   0×154   UART2_TXD   spi0_d0
+P9_22   0×150   UART2_RXD   spi0_sclk
+P9_23   0×44    GPIO1_17    gpmc_a1
+P9_24   0×184   UART1_TXD   uart1_txd
+P9_25   0x1AC   GPIO3_21    mcasp0_ahclkx
+P9_26   0×180   UART1_RXD   uart1_rxd
+P9_27   0x1A4   GPIO3_19    mcasp0_fsr
+P9_28   0x19C   SPI1_CS0    mcasp0_ahclkr
+P9_29   0×194   SPI1_D0 mcasp0_fsx
+P9_30   0×198   SPI1_D1 mcasp0_axr0
+P9_31   0×190   SPI1_SCLK   mcasp0_aclkx
+P9_32       VADC    
+P9_33       AIN4    
+P9_34       AGND    
+P9_35       AIN6    
+P9_36       AIN5    
+P9_37       AIN2    
+P9_38       AIN3    
+P9_39       AIN0    
+P9_40       AIN1    
+P9_41   0x1B0   CLKOUT2 xdma_event_intr1
+P9_42   0×164   GPIO0_7 eCAP0_in_PWM0_out
+P9_43       GND 
+P9_44       GND 
+P9_45       GND 
+P9_46       GND 
